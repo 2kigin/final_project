@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WineDAO">
+
+	<select id="getWineList" resultType="wine">
+		select * from wine where w_no not in(997, 998, 999)
+	</select>
+	
+	
+	<select id="getWineSearchList" resultType="wine">
+		select * from wine where w_no not in(997, 998, 999) and
+		1=1 
+		<if test="searchKeyword != null">and w_nm_k LIKE CONCAT('%',#{searchKeyword},'%') or w_nm_e LIKE CONCAT('%',#{searchKeyword},'%')
+		or continental LIKE CONCAT('%',#{searchKeyword},'%') or country LIKE CONCAT('%',#{searchKeyword},'%') and w_no not in(997, 998, 999)
+		</if>
+	</select>
+	
+	
+	<select id="detaileSearch" resultType="wine">
+		select * from wine where 1=1 
+		<if test="type != 5"> and type = #{type}</if>
+		<if test="continental != null">and  continental = #{continental}</if>
+		<if test="country != null"> and  country = #{country}</if>
+		<if test="w_sweet != 0">  and  w_sweet = #{w_sweet}</if>
+		<if test="w_body != 0">  and  w_body = #{w_body}</if>
+		<if test="w_acidity != 0">  and  w_acidity = #{w_acidity}</if>
+		<if test="w_tannins != 0">  and  w_tannins = #{w_tannins}</if>
+	</select>	
+	<select id="WineListAd" resultType="wine">
+      select * from wine
+   </select>
+   
+   
+   <insert id="insertWine">
+  INSERT INTO WINE
+  (w_nm_k, w_nm_e, continental, country, since, quantity, w_price, type, w_sweet, w_body, w_acidity, w_tannins, w_image1, w_info)values
+  (#{w_nm_k}, #{w_nm_e}, #{continental}, #{country}, #{since}, #{quantity}, #{w_price}, #{type}, #{w_sweet}, #{w_body}, #{w_acidity}, #{w_tannins}, #{w_image1}, #{w_info})
+   </insert>
+   
+   <update id="updateWine">
+   update wine set
+   quantity =  #{quantity}, w_price = #{w_price} 
+   where w_no = #{w_no}
+   </update>
+   
+    <update id="updateorder">
+   update order_list set
+   ORD_STAT =  #{ord_stat}, CS_STAT = #{cs_stat} 
+   where ORD_CODE = #{ord_code}
+   </update>
+   <delete id="deleteWine">
+   delete from wine where w_no = #{w_no}
+   </delete>
+   
+
+<select id="getType" resultType="wine">
+		select * from wine where type = #{type}
+</select>
+
+<select id="getContinental" resultType="wine">
+		select * from wine where continental = #{continental}
+</select>
+
+<select id="getCountry" resultType="wine">
+		select * from wine where country = #{country}
+</select>
+
+</mapper>

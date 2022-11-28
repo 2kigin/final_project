@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+#locationContainer {
+	display: flex; 
+   	justify-content: center;
+} 
+
+#comtitle {
+	margin: 25px 0 !important;
+}
+
+#map {
+	width: 700px;
+	height: 400px;
+}
+
+#map-div {
+	text-align: center;
+}
+
+.col img {
+	filter: brightness(100%) !important;
+}
+
+.location {
+	margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+	#map {
+	width: auto !important;
+	}
+	#map > div > div {
+	display: inline-block;
+}
+	}
